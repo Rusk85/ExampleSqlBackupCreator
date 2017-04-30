@@ -29,8 +29,8 @@ namespace SqlBackup
              * can specify Initialize = true to make the backup as first set on the
              * medium and to overwrite any other existing backup sets if the all the
              * backup sets have expired and specified backup set name matches with
-             * the name on the medium */
             bkpDBFull.Initialize = false;
+             * the name on the medium */
 
             /* Wiring up events for progress monitoring */
             bkpDBFull.PercentComplete += CompletionStatusInPercent;

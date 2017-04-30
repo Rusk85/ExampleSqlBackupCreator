@@ -17,6 +17,9 @@ namespace SqlBackup.GUI
             if (conStr == null)
                 return;
             sqlBackupCreator.DoBackup(conStr);
+
         }
+
     }
+    
 }
