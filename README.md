@@ -6,10 +6,67 @@ I am assuming you have a `ConnectionString` for your SqlServer akin to this one:
 
 More exmaples can be found [here](https://www.connectionstrings.com/sql-server/).
 Just pass that connection string to the `DoBackup()` method and make sure you have specified in your connection string the keyword `Database`. The `SqlConnectionStringBuilder` will essentially parse that string and make parts of it accessible through its properties.
+<hr>
+
+### Button Click Event (`ASP.NET WebForms`)
+
+_Now as for having this all happening with a click of a button I added the below class `_Default`, which shows just that. The whole project can be found [here](https://github.com/Rusk85/ExampleSqlBackupCreator).
+I have to warn you though, I did not have a MSSQLDb to test this and while I was trying to make it work with MySql I just ran out of time. There also is little to no guarding when it comes to malformed `ConnectionStrings`. In other words the app will crash and burn fantastically in cases of that.
+There also are static path references for the output file, which you will have to change accordingly._
+Interesting parts to watch out for:
+
+- `btnStart.Click += btnClick_Start;` // wiring up the website button to a specific method
+- `id="btnStart"` // giving the button a name so I can address it in the CodeBehind
+- some more styling candy and stuff; really nothing impressing at all
 
 <hr>
 
-### Button Click Event
+### WebForm-Project showing `Button Click Event`
+
+This is the code of the `Default.aspx.cs`
+
+    public partial class _Default : Page
+    {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            btnStart.Click += btnClick_Start; // registers the click event with the method below "btnClick_Start"
+        }
+
+        private void btnClick_Start(object sender, EventArgs e)
+        {
+            var sqlBackupCreator = new SqlBackupCreator();
+            var conStr = tbConStr.Text;
+            sqlBackupCreator.DoBackup(conStr);
+        }
+    }
+
+
+And this is the code of the `Default.aspx` (at least the juicy bits; the rest is being created when you make a new project anyway)
+
+	<asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
+
+		<div class="jumbotron">
+			<h2>Clicking the button starts backing up the Database</h2>
+			<p>
+
+				<asp:TextBox
+					runat="server" ID="tbConStr"
+					placeholder="Connection String goes here (no validation)"
+					Columns="129"/>
+			</p>
+			<div style="margin-left: 17.5em">
+				<p>
+					<asp:Button
+						id="btnStart"
+						runat="server"
+						Text="Start Backup"/>
+				</p>
+			</div>
+		</div>
+	</asp:Content>
+
+<hr>
+### Button Click Event (`.NET WinForms`)
 
 _Now as for having this all happening with a click of a button I added the below class `Form1`, which shows just that. The whole project can be found [here](https://github.com/Rusk85/ExampleSqlBackupCreator).
 I have to warn you though, I did not have a MSSQLDb to test this and while I was trying to make it work with MySql I just ran out of time. There also is little to no guarding when it comes to malformed `ConnectionStrings`. In other words the app will crash and burn fantastically in cases of that.
@@ -48,6 +105,8 @@ You will also need to reference these Assemblies on which you can read up more o
 			}
 		}
 	}
+
+<hr>
 
 	using System;
 	using System.Data.SqlClient;
@@ -113,3 +172,4 @@ You will also need to reference these Assemblies on which you can read up more o
 			}
 		}
 	}
+	
