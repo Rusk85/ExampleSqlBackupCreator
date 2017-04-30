@@ -1,3 +1,13 @@
+**tl;dr**
+
+- Example project for exporting a database exists in a github repo: https://github.com/Rusk85/ExampleSqlBackupCreator
+- It contains the exporter logic `SqlBackup` as a project
+- It contains a `WinForms` project showing the usage of a button click event
+- It contains a `WebForms` project showing the same button click event usage
+- In addition there is a powershell script allowing to download a `Microsoft Sql Server 2016 Express` instance, automatically loading it up with your desired `database.mdf` file
+ and then export it using one of the two GUI projects 
+
+<hr>
 I also came across [this SO question](http://stackoverflow.com/a/9835603/1352384) handling a very similar scenario.
 There they are linking to this [site](http://www.mssqltips.com/sqlservertip/1849/backup-and-restore-sql-server-databases-programmatically-with-smo/) which is providing multiple methods of backing up a SQL Database from C# using [`Microsoft.SqlServer.Management.Smo`](https://msdn.microsoft.com/en-us/library/microsoft.sqlserver.management.smo.backup(v=sql.120).aspx) Namespace. I have not tried it myself but I think you might find all the information there you need.
 I also went ahead and modified the code a bit adding the appropriate using statements. 
@@ -6,6 +16,20 @@ I am assuming you have a `ConnectionString` for your SqlServer akin to this one:
 
 More exmaples can be found [here](https://www.connectionstrings.com/sql-server/).
 Just pass that connection string to the `DoBackup()` method and make sure you have specified in your connection string the keyword `Database`. The `SqlConnectionStringBuilder` will essentially parse that string and make parts of it accessible through its properties.
+<hr>
+
+### Docker Container added for `Microsoft Sql Server Express 2016`
+As of right now there is a powershell script `run_sqlexpress_docker.ps1` with some variables that have to be set accordingly but once done automatically pulls the latest MSSQLExpress 2016 Server, downloads any user-specified `database.mdf` file and attaches it to the sql server instance running in the docker container.
+
+**Todos as of know:**
+
+[ ] Work the required parameters for the powershell script into the `WebForms` project
+
+[ ] Run the powershell script from within the project after said variables are set
+
+[ ] Then actually test the 'SqlBackupCreator' after allowing to parameterize some of the static file export fields
+
+
 <hr>
 
 ### Button Click Event (`ASP.NET WebForms`)
