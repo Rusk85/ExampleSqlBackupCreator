@@ -1,6 +1,6 @@
 # Downloads or uses existing <database>.mdf file and attaches it to the mssqlexpress instance in the container
 # Important Note on Windows Hosts: Since the loopback device doesn't work correctly, you have to connecto to the containers internal IP address
-# Find that out by issuing this command: docker inspect <name of container> and look for a key named 
+# Find that out by issuing this command: docker inspect <name of container> and look for a key named 'IPAddress'. The IP usually starts with 172.x.x.x
 
 # STARTREGION VARIABLES YOU HAVE TO DEFINE
 $PORT=1433
