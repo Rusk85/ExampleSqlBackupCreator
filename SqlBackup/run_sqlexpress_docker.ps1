@@ -3,12 +3,23 @@
 # Find that out by issuing this command: docker inspect <name of container> and look for a key named 'IPAddress'. The IP usually starts with 172.x.x.x
 
 # STARTREGION VARIABLES YOU HAVE TO DEFINE
-$PORT=1433
-$DB_FILENAME="AdventureWorks2012_Data.mdf" # name your choose for your database
-$DB_DIR="C:\\Users\\Sven\\Documents\\local-git-repos\\SqlBackup\\" # Directory where the database.mdf file will be downloaded
-$DB_DIR_NORMAL="C:\Users\Sven\Documents\local-git-repos\SqlBackup\" # Quite the same as above but with single slashes '\'
-$PASSWORD="XX5S4a5DpvDlWkY*zZl*" # password for your 'sa' user
-$DB_HTTP_LINK="https://goo.gl/8CFlLQ" # link to the database.mdf file
+param
+(
+	[string]$DB_HTTP_LINK,
+	[string]$DB_FILENAME,
+	[string]$DB_DIR,
+	[string]$DB_DIR_NORMAL,
+	[string]$PASSWORD,
+	[string]$PORT
+)
+[System.Console]::WriteLine($DB_HTTP_LINK)
+[System.Console]::WriteLine($DB_FILENAME)
+#$PORT=1433
+#$DB_FILENAME="AdventureWorks2012_Data.mdf" # name your choose for your database
+#$DB_DIR="C:\\Users\\Sven\\Documents\\local-git-repos\\SqlBackup\\" # Directory where the database.mdf file will be downloaded
+#$DB_DIR_NORMAL="C:\Users\Sven\Documents\local-git-repos\SqlBackup\" # Quite the same as above but with single slashes '\'
+#$PASSWORD="XX5S4a5DpvDlWkY*zZl*" # password for your 'sa' user
+#$DB_HTTP_LINK="https://goo.gl/8CFlLQ" # link to the database.mdf file
 # ENDREGION VARIABLES YOU HAVE TO DEFINE
 
 # DONT CHANGE THIS BLOCK BELOW
@@ -45,5 +56,6 @@ else
 
 
 [System.Console]::WriteLine("Finished Downloading. Starting SqlExpress Server and attaching your database.")
+Exit
 & $DOCKER $run $d $p $volume ${e3}${dbToAttach} $e2 $e1 $IMAGE
 [System.Console]::WriteLine("All finished. Connect using the ip assigned to the container.")
