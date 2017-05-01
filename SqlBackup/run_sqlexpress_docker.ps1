@@ -5,15 +5,27 @@
 # STARTREGION VARIABLES YOU HAVE TO DEFINE
 param
 (
+	[Parameter(Mandatory=$true,Position=1)]
 	[string]$DB_HTTP_LINK,
+	[Parameter(Mandatory=$true,Position=2)]
 	[string]$DB_FILENAME,
+	[Parameter(Mandatory=$true,Position=3)]
 	[string]$DB_DIR,
+	[Parameter(Mandatory=$true,Position=4)]
 	[string]$DB_DIR_NORMAL,
+	[Parameter(Mandatory=$true,Position=5)]
 	[string]$PASSWORD,
-	[string]$PORT
+	[Parameter(Mandatory=$true,Position=6)]
+	[string]$PORT,
+	[Parameter(Mandatory=$true,Position=7)]
+	[string]$DB_NAME
 )
 [System.Console]::WriteLine($DB_HTTP_LINK)
 [System.Console]::WriteLine($DB_FILENAME)
+[System.Console]::WriteLine($DB_DIR)
+[System.Console]::WriteLine($DB_DIR_NORMAL)
+[System.Console]::WriteLine($PASSWORD)
+[System.Console]::WriteLine($PORT)
 #$PORT=1433
 #$DB_FILENAME="AdventureWorks2012_Data.mdf" # name your choose for your database
 #$DB_DIR="C:\\Users\\Sven\\Documents\\local-git-repos\\SqlBackup\\" # Directory where the database.mdf file will be downloaded
@@ -34,7 +46,7 @@ $e1="-esa_password=$PASSWORD"
 $e2="-eACCEPT_EULA=Y"
 $volume="-v${DB_DIR_NORMAL}:C:/temp/"
 $e3="-eattach_dbs="
-$dbToAttach="[{'dbName':'AdventureWorks2012_Data','dbFiles':['C:\\temp\\${DB_FILENAME}']}]"
+$dbToAttach="[{'dbName':'$DB_NAME','dbFiles':['C:\\temp\\${DB_FILENAME}']}]"
 $IMAGE="microsoft/mssql-server-windows-express"
 # DONT CHANGE THIS BLOCK ABOVE
 
@@ -56,6 +68,5 @@ else
 
 
 [System.Console]::WriteLine("Finished Downloading. Starting SqlExpress Server and attaching your database.")
-Exit
 & $DOCKER $run $d $p $volume ${e3}${dbToAttach} $e2 $e1 $IMAGE
 [System.Console]::WriteLine("All finished. Connect using the ip assigned to the container.")

@@ -16,10 +16,18 @@ namespace SqlBackup
 
         public void StartPowershellScript()
         {
-            var mssqlCreator = new MsSqlPowershellRunner();
-            var files = Directory.EnumerateFiles(AppContext.BaseDirectory, "*.ps1", SearchOption.AllDirectories);
-            var theScript = files.FirstOrDefault();
-            mssqlCreator.RunMsSqlExpressServer(File.ReadAllText(theScript), new MsSqlCreationParameters());
+            MsSqlCreationParameters parameters = new MsSqlCreationParameters
+            {
+                PathToScript = @"C:\Users\Sven\Documents\local-git-repos\SqlBackup\SqlBackup\run_sqlexpress_docker.ps1",
+                HttpLinkToDbMdfFile = "https://goo.gl/8CFlLQ",
+                SuAdminPasswort = "XX5S4a5DpvDlWkY*zZl*",
+                HostPort = "6999",
+                PathToMdfFile = @"C:\Users\Sven\Documents\local-git-repos\SqlBackup\SqlBackup",
+                NameOfDatabaseFile = "AdventureWorks2012_Data.mdf",
+                DbName = "AdventureWorks2012_Data"
+            };
+            MsSqlPowershellRunner psRunner = new MsSqlPowershellRunner();
+            psRunner.RunMsSqlExpressServer(parameters);
         }
     }
 }

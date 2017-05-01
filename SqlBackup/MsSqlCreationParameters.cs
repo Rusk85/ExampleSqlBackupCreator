@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -14,6 +15,10 @@ namespace SqlBackup
         public string HostPort { get; set; }
         public string SuAdminPasswort { get; set; }
         public string PathToMdfFile { get; set; }
+        public string PathToScript { get; set; }
+        public string DbName { get; set; }
+
+        public string ScriptContents => File.ReadAllText(PathToScript);
 
         public string DoubleSlashPathToMdfFile
         {
